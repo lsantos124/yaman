@@ -11,9 +11,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.room.Room
+import com.example.yaman.data.ExpenseDatabase
 import com.example.yaman.ui.theme.YamanTheme
 
 class MainActivity : ComponentActivity() {
+
+    val db = Room.databaseBuilder(
+        applicationContext,
+        ExpenseDatabase::class.java,
+        "expense_database"
+    ).build()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
