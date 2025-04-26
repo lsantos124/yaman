@@ -1,4 +1,4 @@
-package com.example.yaman.view
+package com.example.yaman.view.expenses
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,7 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.yaman.viewmodel.BudgetViewModel
 
 @Composable
-fun BudgetScreen(
+fun EnterExpensesForm(
     isDarkMode: Boolean,
     onToggleTheme: () -> Unit
 ) {

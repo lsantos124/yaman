@@ -1,4 +1,4 @@
-package com.example.yaman.view
+package com.example.yaman.view.expenses
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

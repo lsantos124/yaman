@@ -7,7 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.yaman.view.BudgetScreen
+import com.example.yaman.view.categories.ManageCategoriesScreen
+import com.example.yaman.view.expenses.EnterExpensesForm
 
 @Composable
 fun AppNavigation(
@@ -25,10 +26,10 @@ fun AppNavigation(
             // TODO
         }
         composable(Screen.Expenses.route) {
-            BudgetScreen(isDarkMode = isDarkMode, onToggleTheme = onToggleTheme)
+            EnterExpensesForm(isDarkMode = isDarkMode, onToggleTheme = onToggleTheme)
         }
         composable(Screen.Categories.route) {
-            // TODO
+            ManageCategoriesScreen()
         }
         composable(Screen.Budgets.route) {
             // TODO

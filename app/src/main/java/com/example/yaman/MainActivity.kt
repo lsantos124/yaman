@@ -10,13 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.room.Room
-import com.example.yaman.data.ExpenseDatabase
-import com.example.yaman.data.expenses.ExpenseRepository
 import com.example.yaman.ui.theme.Typography
-import com.example.yaman.view.BudgetScreen
 import com.example.yaman.view.navigation.MainScaffold
-import com.example.yaman.viewmodel.BudgetViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

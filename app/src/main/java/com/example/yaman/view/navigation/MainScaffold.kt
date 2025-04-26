@@ -1,10 +1,26 @@
 package com.example.yaman.view.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.runtime.*
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
@@ -19,6 +35,8 @@ fun MainScaffold(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
+    var navigationTarget by remember { mutableStateOf<String?>(null) }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
@@ -26,42 +44,42 @@ fun MainScaffold(
                 NavigationDrawerItem(
                     label = { Text(Screen.Home.title) },
                     selected = false,
-                    onClick = { navController.navigate(Screen.Home.route) }
+                    onClick = { navigationTarget = Screen.Home.route }
                 )
                 NavigationDrawerItem(
                     label = { Text(Screen.Expenses.title) },
                     selected = false,
-                    onClick = { navController.navigate(Screen.Expenses.route) }
+                    onClick = { navigationTarget = Screen.Expenses.route }
                 )
                 NavigationDrawerItem(
                     label = { Text(Screen.Categories.title) },
                     selected = false,
-                    onClick = { navController.navigate(Screen.Categories.route) }
+                    onClick = { navigationTarget = Screen.Categories.route }
                 )
                 NavigationDrawerItem(
                     label = { Text(Screen.Budgets.title) },
                     selected = false,
-                    onClick = { navController.navigate(Screen.Budgets.route) }
+                    onClick = { navigationTarget = Screen.Budgets.route }
                 )
                 NavigationDrawerItem(
                     label = { Text(Screen.Assets.title) },
                     selected = false,
-                    onClick = { navController.navigate(Screen.Assets.route) }
+                    onClick = { navigationTarget = Screen.Assets.route }
                 )
                 NavigationDrawerItem(
                     label = { Text(Screen.NetWorth.title) },
                     selected = false,
-                    onClick = { navController.navigate(Screen.NetWorth.route) }
+                    onClick = { navigationTarget = Screen.NetWorth.route }
                 )
                 NavigationDrawerItem(
                     label = { Text(Screen.Chatbot.title) },
                     selected = false,
-                    onClick = { navController.navigate(Screen.Chatbot.route) }
+                    onClick = { navigationTarget = Screen.Chatbot.route }
                 )
                 NavigationDrawerItem(
                     label = { Text(Screen.Graphs.title) },
                     selected = false,
-                    onClick = { navController.navigate(Screen.Graphs.route) }
+                    onClick = { navigationTarget = Screen.Graphs.route }
                 )
             }
         }
@@ -84,6 +102,20 @@ fun MainScaffold(
                 onToggleTheme = onToggleTheme,
                 innerPadding = innerPadding
             )
+        }
+
+        LaunchedEffect(navigationTarget) {
+            navigationTarget?.let { target ->
+                navController.navigate(target) {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+                drawerState.close()
+                navigationTarget = null // Reset after navigation
+            }
         }
     }
 }
