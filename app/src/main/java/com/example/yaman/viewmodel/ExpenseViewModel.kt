@@ -2,9 +2,9 @@ package com.example.yaman.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.yaman.data.categories.CategoryRepository
+import com.example.yaman.repository.CategoryLocalRepository
 import com.example.yaman.data.expenses.Expense
-import com.example.yaman.data.expenses.ExpenseRepository
+import com.example.yaman.repository.ExpenseLocalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,12 +15,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ExpenseViewModel @Inject constructor(
-    private val expenseRepository: ExpenseRepository,
-    private val categoryRepository: CategoryRepository
+    private val expenseLocalRepository: ExpenseLocalRepository,
+    private val categoryRepository: CategoryLocalRepository
 ) : ViewModel() {
 
     // Expose all expenses as StateFlow
-    val expenses: StateFlow<List<Expense>> = expenseRepository.allExpenses
+    val expenses: StateFlow<List<Expense>> = expenseLocalRepository.allExpenses
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -28,7 +28,7 @@ class ExpenseViewModel @Inject constructor(
         )
 
     // Expose total spending
-    val totalAmount: StateFlow<Double> = expenseRepository.allExpenses
+    val totalAmount: StateFlow<Double> = expenseLocalRepository.allExpenses
         .map { expenses -> expenses.sumOf { it.amount } }
         .stateIn(
             scope = viewModelScope,
@@ -38,7 +38,7 @@ class ExpenseViewModel @Inject constructor(
 
     val categoryMap: StateFlow<Map<Int, String>> = categoryRepository.allCategories
         .map { categories ->
-            categories.associateBy({ it.id }, { it.name })
+            categories.associateBy({ it.localId }, { it.name })
         }
         .stateIn(
             scope = viewModelScope,
@@ -49,7 +49,7 @@ class ExpenseViewModel @Inject constructor(
     // Insert a new expense
     fun addExpense(description: String, amount: Double, categoryId: Int?) {
         viewModelScope.launch {
-            expenseRepository.insertExpense(
+            expenseLocalRepository.insertExpense(
                 Expense(
                     description = description,
                     amount = amount,
@@ -62,7 +62,7 @@ class ExpenseViewModel @Inject constructor(
     // Delete an expense
     fun deleteExpense(expense: Expense) {
         viewModelScope.launch {
-            expenseRepository.deleteExpense(expense)
+            expenseLocalRepository.deleteExpense(expense)
         }
     }
 }

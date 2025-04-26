@@ -10,7 +10,7 @@ import com.example.yaman.data.categories.Category
     foreignKeys = [
         ForeignKey(
             entity = Category::class,
-            parentColumns = ["id"],
+            parentColumns = ["localId"],
             childColumns = ["categoryId"],
             onDelete = ForeignKey.SET_NULL // or CASCADE depending on behavior
         )

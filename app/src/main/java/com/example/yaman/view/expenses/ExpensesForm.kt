@@ -78,7 +78,7 @@ fun ExpensesForm(
                         text = { Text(category.name) },
                         onClick = {
                             selectedCategoryName = category.name
-                            selectedCategoryId = category.id
+                            selectedCategoryId = category.localId
                             expanded = false
                         }
                     )

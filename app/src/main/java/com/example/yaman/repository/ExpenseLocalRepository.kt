@@ -1,8 +1,10 @@
-package com.example.yaman.data.expenses
+package com.example.yaman.repository
 
+import com.example.yaman.data.expenses.Expense
+import com.example.yaman.data.expenses.ExpenseDao
 import kotlinx.coroutines.flow.Flow
 
-class ExpenseRepository(
+class ExpenseLocalRepository(
     private val expenseDao: ExpenseDao
 ) {
     val allExpenses: Flow<List<Expense>> = expenseDao.getAllExpenses()

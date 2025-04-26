@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.room.Room
 import com.example.yaman.data.ExpenseDatabase
 import com.example.yaman.data.expenses.ExpenseDao
-import com.example.yaman.data.expenses.ExpenseRepository
+import com.example.yaman.repository.ExpenseLocalRepository
 import com.example.yaman.data.categories.CategoryDao
-import com.example.yaman.data.categories.CategoryRepository
+import com.example.yaman.repository.CategoryLocalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,13 +39,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideExpenseRepository(expenseDao: ExpenseDao): ExpenseRepository {
-        return ExpenseRepository(expenseDao)
+    fun provideExpenseRepository(expenseDao: ExpenseDao): ExpenseLocalRepository {
+        return ExpenseLocalRepository(expenseDao)
     }
 
     @Provides
     @Singleton
-    fun provideCategoryRepository(categoryDao: CategoryDao): CategoryRepository {
-        return CategoryRepository(categoryDao)
+    fun provideCategoryRepository(categoryDao: CategoryDao): CategoryLocalRepository {
+        return CategoryLocalRepository(categoryDao)
     }
 }
