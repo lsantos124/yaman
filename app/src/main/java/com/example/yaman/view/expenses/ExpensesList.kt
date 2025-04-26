@@ -10,35 +10,31 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.yaman.viewmodel.BudgetViewModel
+import com.example.yaman.viewmodel.CategoryViewModel
+import com.example.yaman.viewmodel.ExpenseViewModel
 
 @Composable
-fun EnterExpensesForm(
+fun ExpensesList(
     isDarkMode: Boolean,
     onToggleTheme: () -> Unit
 ) {
-    val viewModel: BudgetViewModel = hiltViewModel()
+    val expenseViewModel: ExpenseViewModel = hiltViewModel()
+    val categoryViewModel: CategoryViewModel = hiltViewModel()
 
-    val expenses by viewModel.expenses.collectAsState()
-    val totalAmount by viewModel.totalAmount.collectAsState()
+    val expenses by expenseViewModel.expenses.collectAsState()
+    val totalAmount by expenseViewModel.totalAmount.collectAsState()
 
-    var description by remember { mutableStateOf("") }
-    var amount by remember { mutableStateOf("") }
+    val categories by categoryViewModel.categories.collectAsState()
 
     Column(
         modifier = Modifier
@@ -64,46 +60,25 @@ fun EnterExpensesForm(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Input fields
-        OutlinedTextField(
-            value = description,
-            onValueChange = { description = it },
-            label = { Text("Description") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = amount,
-            onValueChange = { amount = it },
-            label = { Text("Amount") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = {
-                if (description.isNotBlank() && amount.toDoubleOrNull() != null) {
-                    viewModel.addExpense(description, amount.toDouble())
-                    description = ""
-                    amount = ""
-                }
-            },
-            modifier = Modifier
-                .align(Alignment.End)
-                .fillMaxWidth()
-        ) {
-            Text("Add Expense")
-        }
+        ExpensesForm(
+            categories = categories,
+            onAddExpense = { description, amount, categoryId ->
+            expenseViewModel.addExpense(description, amount, categoryId)
+        })
 
         Spacer(modifier = Modifier.height(24.dp))
 
         // List of expenses
         LazyColumn {
             items(expenses) { expense ->
-                ExpenseItem(expense = expense, onDelete = { viewModel.deleteExpense(expense) })
+                val categoryMap by expenseViewModel.categoryMap.collectAsState()
+                val categoryName = categoryMap[expense.categoryId] ?: "Uncategorized"
+
+                ExpenseItem(
+                    expense = expense,
+                    categoryName = categoryName,
+                    onDelete = { expenseViewModel.deleteExpense(expense) }
+                )
             }
         }
     }

@@ -12,6 +12,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +21,11 @@ import androidx.compose.ui.unit.dp
 import com.example.yaman.data.expenses.Expense
 
 @Composable
-fun ExpenseItem(expense: Expense, onDelete: () -> Unit) {
+fun ExpenseItem(
+    expense: Expense,
+    categoryName: String,
+    onDelete: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,6 +43,9 @@ fun ExpenseItem(expense: Expense, onDelete: () -> Unit) {
                 Text(text = expense.description, style = MaterialTheme.typography.titleMedium)
                 Text(text = "\$${"%.2f".format(expense.amount)}", style = MaterialTheme.typography.bodyMedium)
             }
+
+            CategoryChip(categoryName)
+
             IconButton(onClick = onDelete) {
                 Icon(
                     imageVector = Icons.Default.Delete,
@@ -45,5 +53,25 @@ fun ExpenseItem(expense: Expense, onDelete: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun CategoryChip(
+    categoryName: String,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        color = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+        shape = MaterialTheme.shapes.small, // Rounded corners
+        modifier = modifier
+    ) {
+        Text(
+            text = categoryName,
+            style = MaterialTheme.typography.labelSmall,
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 4.dp)
+        )
     }
 }
