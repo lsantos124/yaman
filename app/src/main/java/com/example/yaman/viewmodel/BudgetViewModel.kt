@@ -2,8 +2,8 @@ package com.example.yaman.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.yaman.data.Expense
-import com.example.yaman.data.ExpenseRepository
+import com.example.yaman.data.expenses.Expense
+import com.example.yaman.data.expenses.ExpenseRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map

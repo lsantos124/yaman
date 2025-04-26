@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.yaman.data.Expense
+import com.example.yaman.data.expenses.Expense
 
 @Composable
 fun ExpenseItem(expense: Expense, onDelete: () -> Unit) {

@@ -1,4 +1,4 @@
-package com.example.yaman.data
+package com.example.yaman.data.expenses
 
 import kotlinx.coroutines.flow.Flow
 

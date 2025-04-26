@@ -1,4 +1,4 @@
-package com.example.yaman.data
+package com.example.yaman.data.expenses
 
 import androidx.room.Dao
 import androidx.room.Delete
