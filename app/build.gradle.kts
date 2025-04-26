@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("org.jetbrains.kotlin.kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -66,4 +67,12 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.51")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    kapt("com.google.dagger:hilt-compiler:2.51")
+
+    // Compose navigation
+    implementation("androidx.navigation:navigation-compose:2.7.7") // latest stable
 }

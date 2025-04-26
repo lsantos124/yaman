@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yaman.data.categories.Category
 import com.example.yaman.data.categories.CategoryRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CategoryViewModel(
+@HiltViewModel
+class CategoryViewModel @Inject constructor(
     private val repository: CategoryRepository
 ) : ViewModel() {
 

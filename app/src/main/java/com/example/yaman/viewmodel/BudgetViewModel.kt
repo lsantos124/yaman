@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yaman.data.expenses.Expense
 import com.example.yaman.data.expenses.ExpenseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BudgetViewModel(
+@HiltViewModel
+class BudgetViewModel @Inject constructor(
     private val repository: ExpenseRepository
 ) : ViewModel() {
 

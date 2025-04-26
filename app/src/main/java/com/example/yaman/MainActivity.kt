@@ -15,19 +15,14 @@ import com.example.yaman.data.ExpenseDatabase
 import com.example.yaman.data.expenses.ExpenseRepository
 import com.example.yaman.ui.theme.Typography
 import com.example.yaman.view.BudgetScreen
+import com.example.yaman.view.navigation.MainScaffold
 import com.example.yaman.viewmodel.BudgetViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val db = Room.databaseBuilder(
-            applicationContext,
-            ExpenseDatabase::class.java,
-            "expense_database"
-        ).build()
-
-        val repository = ExpenseRepository(db.expenseDao())
 
         setContent {
             var isDarkMode by remember { mutableStateOf(false) }
@@ -42,8 +37,10 @@ class MainActivity : ComponentActivity() {
                 colorScheme = colorScheme,
                 typography = Typography
             ) {
-                val viewModel = BudgetViewModel(repository)
-                BudgetScreen(viewModel, isDarkMode = isDarkMode, onToggleTheme = { isDarkMode = !isDarkMode })
+                MainScaffold(
+                    isDarkMode = isDarkMode,
+                    onToggleTheme = { isDarkMode = !isDarkMode }
+                )
             }
         }
     }

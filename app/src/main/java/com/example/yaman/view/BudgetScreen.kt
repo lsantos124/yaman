@@ -24,14 +24,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.yaman.viewmodel.BudgetViewModel
 
 @Composable
 fun BudgetScreen(
-    viewModel: BudgetViewModel,
     isDarkMode: Boolean,
     onToggleTheme: () -> Unit
 ) {
+    val viewModel: BudgetViewModel = hiltViewModel()
+
     val expenses by viewModel.expenses.collectAsState()
     val totalAmount by viewModel.totalAmount.collectAsState()
 
